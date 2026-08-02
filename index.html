@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#090d0b" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<title>E ⚡ B — Top Jugadores</title>
+<meta name="description" content="Estadísticas, ranking y Balón de Oro del grupo Equipo E vs Equipo B" />
+
+<link rel="stylesheet" href="css/variables.css?v=2.1.0" />
+<link rel="stylesheet" href="css/base.css?v=2.1.0" />
+<link rel="stylesheet" href="css/trailer.css?v=2.1.0" />
+<link rel="stylesheet" href="css/components.css?v=2.1.0" />
+<link rel="stylesheet" href="css/teams.css?v=2.1.0" />
+<link rel="stylesheet" href="css/modal.css?v=2.1.0" />
+<link rel="stylesheet" href="css/balonoro.css?v=2.1.0" />
+<link rel="stylesheet" href="css/admin.css?v=2.1.0" />
+<link rel="stylesheet" href="css/responsive.css?v=2.1.0" />
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+<!-- Tráiler de bienvenida (una vez por sesión) -->
+<div id="trailer-overlay" class="trailer-overlay">
+  <video id="trailer-video" class="trailer-video" muted playsinline autoplay preload="auto">
+    <!-- WEBM opcional: si agregas assets/trailer.webm, descomenta la siguiente línea -->
+    <!-- <source src="assets/trailer.webm" type="video/webm" /> -->
+    <source src="assets/trailer.mp4" type="video/mp4" />
+  </video>
+  <div id="trailer-tap" class="trailer-tap">
+    <i data-lucide="play-circle" class="icon-lg"></i>
+    <span>Toca para reproducir</span>
+  </div>
+  <button id="trailer-skip" class="trailer-skip">
+    Saltar <i data-lucide="chevrons-right" class="icon-sm"></i>
+  </button>
+  <div class="trailer-progress"><div id="trailer-progress-fill" class="trailer-progress-fill"></div></div>
+  <div id="trailer-time" class="trailer-time">0:00</div>
+</div>
+
+<div class="floodlights" aria-hidden="true"></div>
+
+<!-- Botón de configuración -->
+<button id="btn-config" class="btn-config" aria-label="Abrir configuración" aria-expanded="false">
+  <i data-lucide="settings-2" class="icon"></i>
+</button>
+<div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+<!-- Sidebar de configuración -->
+<aside id="sidebar-config" class="sidebar-config" aria-hidden="true">
+  <h2><i data-lucide="sliders-horizontal" class="icon"></i> Configuración</h2>
+
+  <div class="config-item">
+    <label for="switch-medallas"><i data-lucide="award" class="icon-sm"></i> Medallas en el ranking</label>
+    <label class="switch">
+      <input type="checkbox" id="switch-medallas" />
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="config-item">
+    <label for="switch-tema"><i data-lucide="sun-moon" class="icon-sm"></i> Modo claro</label>
+    <label class="switch">
+      <input type="checkbox" id="switch-tema" />
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="config-item" style="flex-direction:column; align-items:stretch; gap:8px;">
+    <label for="select-orden"><i data-lucide="arrow-up-down" class="icon-sm"></i> Ordenar ranking por</label>
+    <select id="select-orden" class="config-select" aria-label="Ordenar ranking">
+      <option value="puntaje">⭐ Puntaje total</option>
+      <option value="goles">⚽ Goles</option>
+      <option value="asistencias">🎯 Asistencias</option>
+      <option value="ga">🔥 G/A</option>
+    </select>
+  </div>
+
+  <div class="sidebar-divider"></div>
+
+  <button id="btn-admin" class="btn-secret">
+    <i data-lucide="terminal" class="icon-sm"></i> Panel avanzado
+  </button>
+</aside>
+
+<main class="container">
+
+  <!-- Hero / marcador -->
+  <section class="hero">
+    <div class="hero-top">
+      <span class="hero-eyebrow"><span class="dot"></span> Temporada en curso</span>
+      <span class="hero-eyebrow"><i data-lucide="calendar" class="icon-sm"></i> S. 2027</span>
+    </div>
+    <h1 class="hero-title"><span class="team-e">E</span><span class="vs">vs</span><span class="team-b">B</span></h1>
+    <div class="hero-score">
+      <div class="hero-team team-e">
+        <div class="hero-team-name">E</div>
+        <div class="hero-team-value" id="hero-e-goles">0</div>
+        <div class="hero-team-label">goles</div>
+      </div>
+      <div class="hero-divider">—</div>
+      <div class="hero-team team-b">
+        <div class="hero-team-name">B</div>
+        <div class="hero-team-value" id="hero-b-goles">0</div>
+        <div class="hero-team-label">goles</div>
+      </div>
+    </div>
+    <p class="hero-sub" id="hero-sub">Las estadísticas se actualizan viernes / sábado.</p>
+  </section>
+
+  <!-- ============ VISTA: RANKING ============ -->
+  <section id="view-ranking" class="view active">
+    <div class="search-wrap">
+      <div class="search-box">
+        <i data-lucide="search" class="search-icon"></i>
+        <input type="text" id="search-input" placeholder="Buscar jugador..." autocomplete="off" />
+        <button id="clear-search" class="clear-btn" aria-label="Limpiar búsqueda"><i data-lucide="x" class="icon-sm"></i></button>
+      </div>
+      <div class="filter-row" id="filter-row">
+        <button class="chip active" data-filter="all"><i data-lucide="users" class="icon-sm"></i> Todos</button>
+        <button class="chip" data-filter="E"><i data-lucide="shield" class="icon-sm"></i> Equipo E</button>
+        <button class="chip" data-filter="B"><i data-lucide="shield" class="icon-sm"></i> Equipo B</button>
+        <button class="chip" data-filter="POR"><i data-lucide="hand" class="icon-sm"></i> Porteros</button>
+        <button class="chip" data-filter="DFC"><i data-lucide="shield-check" class="icon-sm"></i> Defensas</button>
+        <button class="chip" data-filter="MED"><i data-lucide="circle-dot" class="icon-sm"></i> Mediocampo</button>
+        <button class="chip" data-filter="DEL"><i data-lucide="zap" class="icon-sm"></i> Ataque</button>
+      </div>
+    </div>
+
+    <div id="jugador-semana-card" class="card" style="margin-bottom:16px;"></div>
+
+    <h2 class="section-heading"><i data-lucide="list-ordered" class="icon"></i> Ranking</h2>
+    <p class="section-desc">Toca un jugador para ver su tarjeta completa.</p>
+
+    <div id="player-list" class="player-list"></div>
+  </section>
+
+  <!-- ============ VISTA: EQUIPOS ============ -->
+  <section id="view-equipos" class="view">
+    <h2 class="section-heading"><i data-lucide="swords" class="icon"></i> E vs B</h2>
+    <p class="section-desc">Comparativa acumulada de la temporada.</p>
+
+    <div class="teams-vs">
+      <div class="team-pill team-e"><div class="team-tag">E</div><div class="team-count" id="e-count">0 jugadores</div></div>
+      <div class="teams-vs-mid">VS</div>
+      <div class="team-pill team-b"><div class="team-tag">B</div><div class="team-count" id="b-count">0 jugadores</div></div>
+    </div>
+
+    <div class="card" id="compare-card"></div>
+
+    <h2 class="section-heading" style="margin-top:22px;"><i data-lucide="star" class="icon"></i> Mejor promedio por equipo</h2>
+    <div id="mvp-e" class="mvp-card"></div>
+    <div id="mvp-b" class="mvp-card" style="margin-top:10px;"></div>
+  </section>
+
+  <!-- ============ VISTA: BALÓN DE ORO ============ -->
+  <section id="view-balonoro" class="view">
+    <h2 class="section-heading"><i data-lucide="award" class="icon"></i> Balón de Oro 2027</h2>
+    <p class="section-desc">Candidatos y probabilidades según rendimiento integral.</p>
+
+    <div id="balonoro-content"></div>
+
+    <div class="card criteria-card">
+      <h3 class="modal-section-title"><i data-lucide="info" class="icon-sm"></i> Criterios de evaluación</h3>
+      <ul class="criteria-list">
+        <li><span><strong>Puntaje total</strong> — rendimiento general</span><span class="criteria-weight">40%</span></li>
+        <li><span><strong>Consistencia</strong> — regularidad por partido</span><span class="criteria-weight">25%</span></li>
+        <li><span><strong>Impacto</strong> — hat-tricks y jugador de la semana</span><span class="criteria-weight">20%</span></li>
+        <li><span><strong>Versatilidad</strong> — balance goles/asistencias</span><span class="criteria-weight">15%</span></li>
+      </ul>
+      <p class="requirements-note"><i data-lucide="alert-circle" class="icon-sm"></i> Requisitos mínimos: 60% de partidos jugados y 25+ G/A (goles + asistencias).</p>
+    </div>
+  </section>
+
+  <!-- ============ VISTA: ESTADÍSTICAS ============ -->
+  <section id="view-stats" class="view">
+    <h2 class="section-heading"><i data-lucide="bar-chart-3" class="icon"></i> Estadísticas globales</h2>
+    <p class="section-desc">El pulso de toda la temporada, en números.</p>
+
+    <div class="stats-grid">
+      <div class="stat-box"><i data-lucide="target" class="icon-lg"></i><span class="value" id="total-goles">0</span><span class="label">Goles totales</span></div>
+      <div class="stat-box"><i data-lucide="crosshair" class="icon-lg"></i><span class="value" id="total-asistencias">0</span><span class="label">Asistencias</span></div>
+      <div class="stat-box"><i data-lucide="users" class="icon-lg"></i><span class="value" id="total-jugadores">0</span><span class="label">Jugadores</span></div>
+      <div class="stat-box"><i data-lucide="flame" class="icon-lg"></i><span class="value" id="total-hattricks">0</span><span class="label">Hat-tricks</span></div>
+    </div>
+
+    <div class="card" style="margin-bottom:16px;">
+      <h3 class="modal-section-title"><i data-lucide="bar-chart-3" class="icon-sm"></i> Partidos jugados</h3>
+      <p style="font-size:13.5px; margin-bottom:6px;"><strong style="color:var(--team-e)">Equipo E:</strong> <span id="partidos-e">0</span> partidos</p>
+      <p style="font-size:13.5px;"><strong style="color:var(--team-b)">Equipo B:</strong> <span id="partidos-b">0</span> partidos</p>
+    </div>
+
+    <h2 class="section-heading"><i data-lucide="trophy" class="icon"></i> Top 5 por categoría</h2>
+    <div id="top-categorias"></div>
+  </section>
+
+  <footer class="footer">
+    <p>Las estadísticas se actualizan viernes / sábado.</p>
+    <p>Creado el <strong>15/10/25</strong> · Rediseño <strong>v2.1</strong></p>
+  </footer>
+</main>
+
+<!-- Bottom navigation -->
+<nav class="bottom-nav" aria-label="Navegación principal">
+  <button class="nav-btn active" data-view="ranking"><i data-lucide="list-ordered" class="icon"></i><span>Ranking</span></button>
+  <button class="nav-btn" data-view="equipos"><i data-lucide="swords" class="icon"></i><span>Equipos</span></button>
+  <button class="nav-btn" data-view="balonoro"><i data-lucide="award" class="icon"></i><span>Balón de Oro</span></button>
+  <button class="nav-btn" data-view="stats"><i data-lucide="bar-chart-3" class="icon"></i><span>Stats</span></button>
+</nav>
+
+<!-- Modal de jugador -->
+<div id="modal-overlay" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="player-modal" id="player-modal">
+    <div class="modal-drag-handle"></div>
+    <button class="modal-close" id="modal-close" aria-label="Cerrar"><i data-lucide="x" class="icon-sm"></i></button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<!-- Acceso protegido al panel avanzado -->
+<div id="password-overlay" class="admin-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="admin-panel password-panel">
+    <div class="admin-header">
+      <span class="admin-title"><i data-lucide="lock" class="icon"></i> Acceso restringido</span>
+      <button class="modal-close" id="password-close" style="position:static;" aria-label="Cerrar"><i data-lucide="x" class="icon-sm"></i></button>
+    </div>
+    <p class="admin-note">Ingresa la contraseña del panel avanzado para continuar.</p>
+    <form id="password-form">
+      <input type="password" id="password-input" class="password-input" placeholder="Contraseña" autocomplete="current-password" />
+      <p class="password-error" id="password-error"></p>
+      <button type="submit" class="btn btn-primary btn-block"><i data-lucide="unlock" class="icon-sm"></i> Entrar</button>
+    </form>
+  </div>
+</div>
+
+<!-- Panel avanzado (admin local) -->
+<div id="admin-overlay" class="admin-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="admin-panel">
+    <div class="admin-header">
+      <span class="admin-title"><i data-lucide="terminal" class="icon"></i> Panel avanzado</span>
+      <button class="modal-close" id="admin-close" style="position:static;" aria-label="Cerrar"><i data-lucide="x" class="icon-sm"></i></button>
+    </div>
+    <p class="admin-note">Simula cambios de estadísticas, expórtalos/impórtalos, o conecta tu data.json para escribirlo directamente.</p>
+
+    <div class="admin-actions">
+      <button class="btn btn-outline" id="admin-export"><i data-lucide="download" class="icon-sm"></i> Exportar JSON</button>
+      <button class="btn btn-outline" id="admin-import"><i data-lucide="upload" class="icon-sm"></i> Importar JSON</button>
+      <input type="file" id="admin-import-file" accept="application/json" class="visually-hidden" />
+    </div>
+
+    <div class="admin-games">
+      <div class="field"><label for="admin-partidos-e">Partidos Equipo E</label><input type="number" min="0" id="admin-partidos-e" /></div>
+      <div class="field"><label for="admin-partidos-b">Partidos Equipo B</label><input type="number" min="0" id="admin-partidos-b" /></div>
+    </div>
+    <p class="admin-partidos-hint" id="admin-partidos-hint"></p>
+
+    <div class="admin-file-connect">
+      <button class="btn btn-outline btn-block" id="admin-connect-file"><i data-lucide="link" class="icon-sm"></i> Conectar data.json de este dispositivo</button>
+      <p class="admin-file-status" id="admin-file-status">Comprobando compatibilidad…</p>
+    </div>
+
+    <div id="admin-players"></div>
+
+    <div class="admin-actions" style="margin-top:6px;">
+      <button class="btn btn-primary btn-block" id="admin-save"><i data-lucide="save" class="icon-sm"></i> Guardar cambios locales</button>
+    </div>
+    <button class="btn btn-outline btn-block" id="admin-reset" style="margin-top:8px;"><i data-lucide="rotate-ccw" class="icon-sm"></i> Restablecer datos originales</button>
+
+    <p class="admin-footer-note"><i data-lucide="info" class="icon-sm"></i> Sin conectar un archivo, los cambios se guardan solo en tu navegador. Si conectas tu data.json (Chrome/Edge de escritorio o Android), se sobrescribe directamente al guardar.</p>
+  </div>
+</div>
+
+<script type="module" src="js/main.js?v=2.1.0"></script>
+</body>
+</html>
