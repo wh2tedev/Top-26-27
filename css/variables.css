@@ -1,0 +1,84 @@
+/* ==========================================================
+   DESIGN TOKENS — Estadio nocturno
+   Paleta inspirada en una cancha bajo reflectores: verde-negro
+   profundo de fondo, acento "floodlight" naranja, oro para el
+   Balón de Oro y dos colores de camiseta para el derbi E/B.
+   ========================================================== */
+:root{
+  /* Superficies */
+  --bg: #090d0b;
+  --bg-elevated: #0d1210;
+  --surface: #111815;
+  --card: #141c19;
+  --card-hover: #182019;
+  --border: rgba(237, 245, 240, 0.08);
+  --border-strong: rgba(237, 245, 240, 0.16);
+  --hover-bg: rgba(237, 245, 240, 0.04);
+
+  /* Texto */
+  --text: #eef4f0;
+  --text-secondary: #a8b6b0;
+  --muted: #6d7a75;
+
+  /* Marca / acento */
+  --accent: #ff5a1f;
+  --accent-hover: #ff7b48;
+  --accent-soft: rgba(255, 90, 31, 0.14);
+
+  /* Equipos */
+  --team-e: #f0323f;
+  --team-e-soft: rgba(240, 50, 63, 0.14);
+  --team-b: #a855f7;
+  --team-b-soft: rgba(168, 85, 247, 0.14);
+
+  /* Balón de Oro */
+  --gold: #ffc940;
+  --gold-soft: rgba(255, 201, 64, 0.14);
+  --silver: #cfd8de;
+  --bronze: #d98a4b;
+
+  /* Estado */
+  --success: #37d67a;
+  --danger: #ff5a5a;
+
+  /* Radios & sombras */
+  --radius-sm: 8px;
+  --radius: 16px;
+  --radius-lg: 24px;
+  --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.45);
+  --shadow-pop: 0 24px 60px rgba(0, 0, 0, 0.55);
+
+  /* Tipografía */
+  --font-display: 'Rajdhani', 'Segoe UI', sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SFMono-Regular', monospace;
+
+  /* Movimiento */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Layout */
+  --nav-height: 68px;
+  --max-width: 720px;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+body.light{
+  --bg: #eef2f0;
+  --bg-elevated: #ffffff;
+  --surface: #ffffff;
+  --card: #ffffff;
+  --card-hover: #f4f7f5;
+  --border: rgba(9, 20, 15, 0.10);
+  --border-strong: rgba(9, 20, 15, 0.18);
+  --hover-bg: rgba(9, 20, 15, 0.04);
+
+  --text: #0d1512;
+  --text-secondary: #4c5a54;
+  --muted: #7c8a84;
+
+  --accent-soft: rgba(255, 90, 31, 0.10);
+  --shadow-card: 0 10px 30px rgba(13, 21, 18, 0.08);
+  --shadow-pop: 0 24px 60px rgba(13, 21, 18, 0.16);
+}

@@ -1,0 +1,174 @@
+/* ================= BALÓN DE ORO ================= */
+.bo-countdown{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  background: var(--gold-soft);
+  border: 1px solid rgba(255, 201, 64, 0.3);
+  margin-bottom: 18px;
+}
+.bo-countdown .icon{ color: var(--gold); flex-shrink: 0; }
+.bo-countdown-text{ font-size: 13px; }
+.bo-countdown-text strong{ color: var(--gold); }
+.bo-countdown-date{ font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+.bo-timer{
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+.bo-timer-unit{
+  text-align: center;
+  min-width: 40px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 4px 6px;
+}
+.bo-timer-unit .num{ font-family: var(--font-mono); font-weight: 700; font-size: 15px; color: var(--gold); display: block; }
+.bo-timer-unit .unit{ font-size: 8.5px; color: var(--muted); text-transform: uppercase; }
+
+/* Podio */
+.podium{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: end;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.podium-slot{
+  text-align: center;
+}
+
+.podium-avatar{
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-weight: 700; font-size: 18px;
+  margin: 0 auto 8px;
+  background: var(--surface);
+  border: 2px solid var(--border-strong);
+}
+.podium-slot.gold .podium-avatar{ border-color: var(--gold); color: var(--gold); box-shadow: 0 0 24px rgba(255,201,64,.35); }
+.podium-slot.silver .podium-avatar{ border-color: var(--silver); color: var(--silver); }
+.podium-slot.bronze .podium-avatar{ border-color: var(--bronze); color: var(--bronze); }
+
+.podium-name{ font-size: 12.5px; font-weight: 600; margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.podium-pct{ font-family: var(--font-mono); font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+
+.podium-bar{
+  border-radius: 10px 10px 0 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom: none;
+}
+.podium-slot.gold .podium-bar{ height: 92px; background: linear-gradient(180deg, var(--gold-soft), var(--surface)); border-color: rgba(255,201,64,.4); }
+.podium-slot.silver .podium-bar{ height: 68px; }
+.podium-slot.bronze .podium-bar{ height: 50px; }
+
+.podium-slot.gold{ order: 2; }
+.podium-slot.silver{ order: 1; }
+.podium-slot.bronze{ order: 3; }
+
+.podium-rank-num{
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--muted);
+  padding-top: 10px;
+}
+.podium-slot.gold .podium-rank-num{ color: var(--gold); }
+
+/* Lista de candidatos restantes */
+.candidate-card{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  margin-bottom: 10px;
+}
+.candidate-rank{
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--muted);
+  min-width: 24px;
+  text-align: center;
+}
+.candidate-info{ flex: 1; min-width: 0; }
+.candidate-name{ font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.candidate-stats{ display: flex; gap: 10px; font-size: 11.5px; color: var(--muted); flex-wrap: wrap; margin-bottom: 6px; }
+.candidate-stats span{ display: flex; align-items: center; gap: 3px; }
+.candidate-bar-track{ height: 6px; background: var(--surface); border-radius: 6px; overflow: hidden; }
+.candidate-bar-fill{ height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-hover)); border-radius: 6px; width: 0; transition: width 1s var(--ease); }
+.candidate-pct{ font-family: var(--font-mono); font-weight: 700; font-size: 15px; color: var(--accent); min-width: 48px; text-align: right; }
+
+/* Criterios */
+.criteria-card{ margin-top: 20px; }
+.criteria-list li{
+  display: flex; justify-content: space-between;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.criteria-list li:last-child{ border-bottom: none; }
+.criteria-list strong{ color: var(--text); }
+.criteria-weight{ font-family: var(--font-mono); color: var(--gold); font-weight: 600; }
+
+.requirements-note{
+  display: flex; gap: 8px; align-items: flex-start;
+  font-size: 12px; color: var(--muted);
+  margin-top: 12px; padding: 12px; background: var(--surface); border-radius: var(--radius-sm);
+}
+.requirements-note .icon-sm{ margin-top: 1px; flex-shrink: 0; }
+
+/* Ceremonia / ganador */
+.ceremony{ text-align: center; }
+.ceremony-trophy{ font-size: 64px; margin-bottom: 10px; animation: trophy-float 2.4s ease-in-out infinite; }
+@keyframes trophy-float{
+  0%, 100%{ transform: translateY(0) rotate(-2deg); }
+  50%{ transform: translateY(-8px) rotate(2deg); }
+}
+.ceremony-title{
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 26px;
+  background: linear-gradient(135deg, var(--gold), #fff3c4);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: 4px;
+}
+.ceremony-date{ font-size: 12.5px; color: var(--muted); margin-bottom: 20px; }
+
+.winner-card{
+  border: 2px solid var(--gold);
+  border-radius: var(--radius-lg);
+  padding: 26px 18px;
+  background: linear-gradient(160deg, var(--gold-soft), transparent 70%);
+  margin-bottom: 20px;
+}
+.winner-badge{ font-size: 12px; font-weight: 800; letter-spacing: .12em; color: var(--gold); text-transform: uppercase; margin-bottom: 10px; }
+.winner-name{ font-family: var(--font-display); font-weight: 700; font-size: 26px; margin-bottom: 18px; }
+.winner-stats{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 18px; }
+.winner-stat{ background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; display: flex; align-items: center; gap: 8px; }
+.winner-stat .icon-sm{ color: var(--accent); }
+.winner-stat span{ font-size: 13px; font-weight: 600; }
+.winner-pct{ padding-top: 14px; border-top: 1px dashed var(--border-strong); }
+.winner-pct .big{ font-family: var(--font-mono); font-weight: 700; font-size: 38px; color: var(--gold); display: block; }
+.winner-pct .small{ font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+
+.finalists-list{ text-align: left; }
+.finalist-item{
+  display: flex; align-items: center; gap: 12px;
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 12px; margin-bottom: 8px;
+}
+.finalist-medal{ font-size: 22px; }
+.finalist-name{ flex: 1; font-weight: 600; font-size: 13.5px; }
+.finalist-stats{ font-size: 11.5px; color: var(--muted); }

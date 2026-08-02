@@ -1,0 +1,27 @@
+@media (min-width: 560px){
+  .stats-grid{ grid-template-columns: repeat(4, 1fr); }
+  .admin-fields{ grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (min-width: 680px){
+  body{ padding-bottom: 32px; }
+  .bottom-nav{
+    position: sticky;
+    top: 0;
+    bottom: auto;
+    height: 60px;
+    border-top: none;
+    border-bottom: 1px solid var(--border);
+    max-width: var(--max-width);
+    margin: 0 auto;
+    border-radius: 0 0 var(--radius) var(--radius);
+  }
+  .nav-btn.active::before{ top: auto; bottom: 2px; }
+  body{ padding-top: 0; }
+  .container{ padding-top: 24px; }
+}
+
+@media (min-width: 860px){
+  :root{ --max-width: 860px; }
+  .stats-grid{ grid-template-columns: repeat(4, 1fr); }
+}
