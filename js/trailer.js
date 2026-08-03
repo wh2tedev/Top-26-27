@@ -34,6 +34,7 @@ export function initTrailer(){
 
   const video = document.getElementById('trailer-video');
   const skipBtn = document.getElementById('trailer-skip');
+  const muteBtn = document.getElementById('trailer-mute');
   const progressFill = document.getElementById('trailer-progress-fill');
   const timeLabel = document.getElementById('trailer-time');
   const tapOverlay = document.getElementById('trailer-tap');
@@ -90,6 +91,14 @@ export function initTrailer(){
   });
 
   skipBtn.addEventListener('click', reveal);
+
+  if (muteBtn){
+    muteBtn.addEventListener('click', () => {
+      video.muted = !video.muted;
+      muteBtn.classList.toggle('unmuted', !video.muted);
+      muteBtn.setAttribute('aria-label', video.muted ? 'Activar sonido' : 'Silenciar');
+    });
+  }
 
   const playPromise = video.play();
   if (playPromise !== undefined){

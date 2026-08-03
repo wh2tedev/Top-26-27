@@ -36,6 +36,73 @@ export function positionLabel(codigo){
   return POSITIONS[codigo]?.label || codigo || 'Sin posición';
 }
 
+/** Arquetipos: insignia PERMANENTE de identidad de juego (se define a mano en
+ *  data.json, campo "arquetipo" — no se calcula con estadísticas). Agrupados
+ *  por bloque táctico solo como referencia; no se valida contra la posición
+ *  real del jugador.
+ *  Mediocampo y Ataque comparten el mismo grupo ("MED_DEL") porque en la
+ *  práctica sus estilos de juego se mezclan mucho (un CAM puede ser KILLER,
+ *  un ST puede ser CREADOR DE JUGADAS, etc.) — los 8 arquetipos de ese
+ *  bloque son compatibles entre sí para cualquier posición de ese bloque.
+ *  Porteros y defensas se mantienen en su propio grupo aparte. */
+export const ARCHETYPES = {
+  'CAZA-GOLES':          { label: 'Caza-goles',          icon: 'target',        group: 'MED_DEL' },
+  'KILLER':              { label: 'Killer',              icon: 'skull',         group: 'MED_DEL' },
+  'REGATEADOR':          { label: 'Regateador',          icon: 'wind',          group: 'MED_DEL' },
+  'VELOCISTA':           { label: 'Velocista',           icon: 'gauge',         group: 'MED_DEL' },
+  'RECUPERADOR':         { label: 'Recuperador',         icon: 'shield',        group: 'MED_DEL' },
+  'CREADOR DE JUGADAS':  { label: 'Creador de jugadas',  icon: 'sparkles',      group: 'MED_DEL' },
+  'CALCULADOR':          { label: 'Calculador',          icon: 'brain',         group: 'MED_DEL' },
+  'ASISTIDOR':           { label: 'Asistidor',           icon: 'send',          group: 'MED_DEL' },
+  'HAGE':                { label: 'Hage',                icon: 'rocket',        group: 'MED_DEL' },
+  'HAGE':                { label: 'Hage',                icon: 'rocket',        group: 'MED_DEL' },
+  'MURALLA':             { label: 'Muralla',             icon: 'shield-check',  group: 'POR_DFC' },
+  'RUDO':                { label: 'Rudo',                icon: 'swords',        group: 'POR_DFC' },
+  'TODO TERRENO':        { label: 'Todo terreno',        icon: 'compass',       group: 'POR_DFC' },
+  'INTERCEPTADOR':       { label: 'Interceptador',       icon: 'eye',           group: 'POR_DFC' },
+};
+
+/** Grupos de posición que pueden usar cualquier arquetipo de un bloque dado.
+ *  MED y DEL comparten el mismo pool de arquetipos ("MED_DEL"); POR y DFC
+ *  comparten el suyo ("POR_DFC"). Útil si en el futuro se agrega un selector
+ *  de arquetipos filtrado por posición. */
+export const ARCHETYPE_POOL_BY_POSITION_GROUP = {
+  DEL: 'MED_DEL',
+  MED: 'MED_DEL',
+  POR: 'POR_DFC',
+  DFC: 'POR_DFC',
+};
+
+/** Lista de arquetipos disponibles para un grupo de posición dado (ej. "MED" o "DEL"
+ *  devuelven los mismos 8; "POR" o "DFC" devuelven los otros 4). */
+export function archetypesForPositionGroup(posGroup){
+  const pool = ARCHETYPE_POOL_BY_POSITION_GROUP[posGroup];
+  return Object.entries(ARCHETYPES)
+    .filter(([, meta]) => meta.group === pool)
+    .map(([code, meta]) => ({ code, ...meta }));
+}
+
+/** Devuelve { label, icon, group } para un código de arquetipo, o null si no hay ninguno.
+ *  Si el código no está en el catálogo, igual se muestra tal cual (con ícono genérico)
+ *  para no perder datos si alguien escribe uno nuevo directamente en data.json. */
+export function archetypeMeta(codigo){
+  if (!codigo) return null;
+  const key = codigo.toString().trim().toUpperCase();
+  return ARCHETYPES[key] || { label: key, icon: 'star', group: null };
+}
+
+/** Normaliza el/los arquetipo(s) de un jugador a un array de códigos.
+ *  Acepta: "arquetipos": ["KILLER","VELOCISTA"] (esquema actual, varios),
+ *  o el campo antiguo "arquetipo": "KILLER" (un solo string, se migra solo). */
+export function normalizeArquetipos(j){
+  let arr = j.arquetipos;
+  if (arr === undefined && j.arquetipo) arr = [j.arquetipo]; // migración del campo antiguo
+  if (!Array.isArray(arr)) arr = arr ? [arr] : [];
+  return arr
+    .map(a => (a ?? '').toString().trim().toUpperCase())
+    .filter(Boolean);
+}
+
 export function slugify(nombre){
   return nombre
     .toString()
@@ -103,6 +170,11 @@ function computeStats(j, partidosCfg){
   j.id = j.id || slugify(j.nombre);
   j.equipo = normalizeEquipo(j.equipo);
   j.posicion = resolvePosicion(j);
+
+  // Campos permanentes de identidad (no derivados de stats de la temporada)
+  j.arquetipos = normalizeArquetipos(j);
+  j.dorsal = (j.dorsal === undefined || j.dorsal === null || j.dorsal === '') ? null : j.dorsal;
+  j.balonesDeOro = Array.isArray(j.balonesDeOro) ? j.balonesDeOro : [];
 
   const grupo = positionGroup(j.posicion);
   const partidos = j.equipo === 'E' ? partidosCfg.E : partidosCfg.B;

@@ -23,6 +23,7 @@ import {
   saveOverride, clearOverrides, positionGroup, processDataset,
   supportsFileSystemAccess, hasConnectedFile, connectedFileName, connectDataFile, writeDataFile,
 } from './data.js?v=2.1.0';
+import { SEASON, getStoredGanador } from './balonoro.js?v=2.1.0';
 
 const PASSWORD_HASH = 'b2835525f88a24f857c5f60961fb02e377d37b5b85e811a42edac95fd775b870'; // "golazo2027"
 const AUTH_KEY = 'admin_authed_v1';
@@ -55,6 +56,7 @@ export function initAdmin(applyLocal, reloadFromNetwork, closeSidebar){
 
   const connectBtn = document.getElementById('admin-connect-file');
   const fileStatus = document.getElementById('admin-file-status');
+  const boCallout = document.getElementById('admin-bo-callout');
 
   const pwOverlay = document.getElementById('password-overlay');
   const pwInput = document.getElementById('password-input');
@@ -112,10 +114,70 @@ export function initAdmin(applyLocal, reloadFromNetwork, closeSidebar){
     }
   }
 
+  function renderBoCallout(){
+    const ganador = getStoredGanador();
+    const jugador = ganador ? state.jugadores.find(j => j.id === ganador.id) : null;
+    const yaGuardado = jugador && (jugador.balonesDeOro || []).includes(SEASON);
+
+    if (!ganador || !jugador || yaGuardado){
+      boCallout.innerHTML = '';
+      return;
+    }
+
+    boCallout.innerHTML = `
+      <div class="admin-bo-alert">
+        <i data-lucide="trophy" class="icon"></i>
+        <div class="admin-bo-alert-text">
+          <strong>🏆 Balón de Oro ${SEASON} otorgado a ${jugador.nombre}</strong>
+          <span>Todavía no es permanente en tu data.json. Guárdalo para que quede en su ficha para siempre.</span>
+        </div>
+        <button class="btn btn-primary" id="admin-bo-save-btn">Añadir insignia</button>
+      </div>
+    `;
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+
+    document.getElementById('admin-bo-save-btn').addEventListener('click', () => awardBalonDeOroBadge(jugador.id));
+  }
+
+  async function awardBalonDeOroBadge(jugadorId){
+    const raw = state.rawJugadores.find(j => j.id === jugadorId);
+    if (!raw) return;
+    const nuevasTemporadas = [...new Set([...(raw.balonesDeOro || []), SEASON])];
+    saveOverride(jugadorId, { balonesDeOro: nuevasTemporadas });
+
+    const updatedRaw = state.rawJugadores.map(j => j.id === jugadorId ? { ...j, balonesDeOro: nuevasTemporadas } : j);
+
+    if (hasConnectedFile()){
+      try{
+        await writeDataFile(updatedRaw, state.partidos);
+        fileStatus.textContent = '✅ Insignia de Balón de Oro guardada directamente en tu data.json.';
+      }catch(err){
+        fileStatus.textContent = '⚠️ No se pudo escribir el archivo: ' + err.message;
+      }
+    } else if (supportsFileSystemAccess()){
+      try{
+        await connectDataFile();
+        await writeDataFile(updatedRaw, state.partidos);
+        fileStatus.textContent = `✅ Conectado a "${connectedFileName()}" y la insignia quedó guardada.`;
+      }catch(err){
+        if (err.name !== 'AbortError'){
+          fileStatus.textContent = '⚠️ No se pudo conectar/escribir el archivo: ' + err.message;
+        }
+      }
+    } else {
+      alert('Tu navegador no soporta guardar directamente. La insignia quedó previsualizada localmente — exporta el JSON para hacerla permanente.');
+    }
+
+    applyLocal(updatedRaw, state.partidos);
+    renderBoCallout();
+    updateFileStatus();
+  }
+
   function openAdminPanel(){
     updatePartidosUI();
     renderPlayers();
     updateFileStatus();
+    renderBoCallout();
     overlay.classList.add('open');
     overlay.setAttribute('aria-hidden', 'false');
   }

@@ -2,7 +2,8 @@
    modal.js — Tarjeta de jugador flotante (estilo FUT)
    ========================================================== */
 import { state, refreshIcons } from './state.js?v=2.1.0';
-import { positionGroup, positionLabel } from './data.js?v=2.1.0';
+import { positionGroup, positionLabel, archetypeMeta } from './data.js?v=2.1.0';
+import { SEASON, getStoredGanador } from './balonoro.js?v=2.1.0';
 
 export function initModal(){
   const overlay = document.getElementById('modal-overlay');
@@ -40,6 +41,28 @@ export function initModal(){
       ? `<div class="badges-row">${badges.map(b => `<span class="badge-chip"><i data-lucide="${b.icon}" class="icon-sm"></i>${b.label}</span>`).join('')}</div>`
       : `<p class="badge-empty">Sin insignias todavía — ¡a por ellas!</p>`;
 
+    // Insignias PERMANENTES: arquetipo(s) (definidos en data.json) + Balón(es) de Oro ganados
+    const archetypeHtml = (j.arquetipos || [])
+      .map(archetypeMeta)
+      .filter(Boolean)
+      .map(a => `<span class="permanent-chip archetype-chip"><i data-lucide="${a.icon}" class="icon-sm"></i>${a.label}</span>`)
+      .join('');
+
+    const golden = new Set(j.balonesDeOro || []);
+    const storedGanador = getStoredGanador();
+    const pendingSeason = storedGanador && storedGanador.id === j.id && !golden.has(SEASON) ? SEASON : null;
+    const goldenChips = [...golden].map(temporada =>
+      `<span class="permanent-chip balon-oro-chip"><i data-lucide="trophy" class="icon-sm"></i>Balón de Oro ${temporada}</span>`
+    ).join('');
+    const pendingChip = pendingSeason
+      ? `<span class="permanent-chip balon-oro-chip pending"><i data-lucide="trophy" class="icon-sm"></i>Balón de Oro ${pendingSeason} <em>(sin guardar)</em></span>`
+      : '';
+
+    const permanentChips = archetypeHtml + goldenChips + pendingChip;
+    const permanentRow = permanentChips ? `<div class="permanent-badges">${permanentChips}</div>` : '';
+
+    const dorsalHtml = j.dorsal ? `<div class="player-card-dorsal">#${j.dorsal}</div>` : '';
+
     const weekPct = j.goles > 0 ? Math.min(100, ((s.goles || 0) / j.goles) * 100) : 0;
 
     body.innerHTML = `
@@ -48,7 +71,9 @@ export function initModal(){
         <div class="player-card-score">${niceScore}</div>
         <div class="player-card-score-label">Puntaje total</div>
         <div class="player-card-name">${j.nombre.replace(/\s*\(.*?\)\s*/, '')}</div>
+        ${dorsalHtml}
         <span class="player-card-pos">${j.posicion}</span>
+        ${permanentRow}
       </div>
 
       <div class="modal-stat-grid">

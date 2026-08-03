@@ -4,13 +4,22 @@
    ========================================================== */
 import { state, refreshIcons } from './state.js?v=2.1.0';
 
-const FECHA_ENTREGA = new Date('2027-01-01T20:00:00');
+export const SEASON = '26-27';
+const FECHA_ENTREGA = new Date('2027-08-24T20:00:00');
 const LS_OTORGADO = 'balon_oro_2027_otorgado';
 const LS_GANADOR = 'balon_oro_2027_ganador';
 const LS_CANDIDATOS = 'balon_oro_2027_candidatos';
 const LS_FECHA = 'balon_oro_2027_fecha_otorgamiento';
 
 let countdownTimer = null;
+
+/** Devuelve el ganador ya otorgado (localmente) para esta temporada, o null si aún no se otorgó. */
+export function getStoredGanador(){
+  if (localStorage.getItem(LS_OTORGADO) !== 'true') return null;
+  try{
+    return JSON.parse(localStorage.getItem(LS_GANADOR));
+  }catch(e){ return null; }
+}
 
 function calcularCandidatos(){
   const candidatos = state.jugadores.map(j => {
@@ -160,7 +169,7 @@ function ganadorCardHtml(ganador, candidatos, fecha, isCeremonia){
   return `
     <div class="ceremony">
       <div class="ceremony-trophy">🏆</div>
-      <h3 class="ceremony-title">${isCeremonia ? '¡Balón de Oro otorgado!' : 'Balón de Oro 2027'}</h3>
+      <h3 class="ceremony-title">${isCeremonia ? '¡Balón de Oro otorgado!' : `Balón de Oro ${SEASON}`}</h3>
       <p class="ceremony-date">Otorgado el ${fecha.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
 
       <div class="winner-card">
