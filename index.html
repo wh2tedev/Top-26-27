@@ -39,6 +39,10 @@
   <button id="trailer-skip" class="trailer-skip">
     Saltar <i data-lucide="chevrons-right" class="icon-sm"></i>
   </button>
+  <button id="trailer-mute" class="trailer-mute" aria-label="Activar sonido">
+    <i data-lucide="volume-x" class="icon-sm icon-muted"></i>
+    <i data-lucide="volume-2" class="icon-sm icon-unmuted"></i>
+  </button>
   <div class="trailer-progress"><div id="trailer-progress-fill" class="trailer-progress-fill"></div></div>
   <div id="trailer-time" class="trailer-time">0:00</div>
 </div>
@@ -199,6 +203,18 @@
     <div id="top-categorias"></div>
   </section>
 
+  <!-- ============ VISTA: HIGHLIGHTS ============ -->
+  <section id="view-highlights" class="view">
+    <h2 class="section-heading"><i data-lucide="clapperboard" class="icon"></i> Highlights</h2>
+    <p class="section-desc">Los mejores momentos de la temporada.</p>
+
+    <div class="highlights-empty">
+      <i data-lucide="film" class="icon-lg"></i>
+      <h3>Aún no hay highlights</h3>
+      <p>Cuando empiecen a subirse jugadas, goles y momentos destacados, van a aparecer aquí.</p>
+    </div>
+  </section>
+
   <footer class="footer">
     <p>Las estadísticas se actualizan viernes / sábado.</p>
     <p>Creado el <strong>15/10/25</strong> · Rediseño <strong>v2.1</strong></p>
@@ -211,6 +227,7 @@
   <button class="nav-btn" data-view="equipos"><i data-lucide="swords" class="icon"></i><span>Equipos</span></button>
   <button class="nav-btn" data-view="balonoro"><i data-lucide="award" class="icon"></i><span>Balón de Oro</span></button>
   <button class="nav-btn" data-view="stats"><i data-lucide="bar-chart-3" class="icon"></i><span>Stats</span></button>
+  <button class="nav-btn" data-view="highlights"><i data-lucide="clapperboard" class="icon"></i><span>Highlights</span></button>
 </nav>
 
 <!-- Modal de jugador -->
@@ -246,6 +263,8 @@
       <button class="modal-close" id="admin-close" style="position:static;" aria-label="Cerrar"><i data-lucide="x" class="icon-sm"></i></button>
     </div>
     <p class="admin-note">Simula cambios de estadísticas, expórtalos/impórtalos, o conecta tu data.json para escribirlo directamente.</p>
+
+    <div id="admin-bo-callout"></div>
 
     <div class="admin-actions">
       <button class="btn btn-outline" id="admin-export"><i data-lucide="download" class="icon-sm"></i> Exportar JSON</button>

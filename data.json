@@ -1,5 +1,8 @@
 {
-  "partidos": { "E": 0, "B": 0 },
+  "partidos": {
+    "E": 0,
+    "B": 0
+  },
   "jugadores": [
     {
       "id": "ezequiel",
@@ -9,10 +12,16 @@
       "goles": 0,
       "asistencias": 0,
       "hattricks": 0,
-      "semana": { "goles": 0, "asistencias": 0 },
+      "semana": {
+        "goles": 0,
+        "asistencias": 0
+      },
       "salvadas": 0,
       "bloqueos": 0,
-      "entradas": 0
+      "entradas": 0,
+      "dorsal": "11",
+      "balonesDeOro": ["25-26"],
+      "arquetipos": ["REGATEADOR", "ASISTIDOR"]
     },
     {
       "id": "josmil",
@@ -22,10 +31,16 @@
       "goles": 0,
       "asistencias": 0,
       "hattricks": 0,
-      "semana": { "goles": 0, "asistencias": 0 },
+      "semana": {
+        "goles": 0,
+        "asistencias": 0
+      },
       "salvadas": 0,
       "bloqueos": 0,
-      "entradas": 0
+      "entradas": 0,
+      "dorsal": "10",
+      "balonesDeOro": [],
+      "arquetipos": ["CAZA-GOLES"]
     },
     {
       "id": "franklin",
@@ -35,10 +50,16 @@
       "goles": 0,
       "asistencias": 0,
       "hattricks": 0,
-      "semana": { "goles": 0, "asistencias": 0 },
+      "semana": {
+        "goles": 0,
+        "asistencias": 0
+      },
       "salvadas": 0,
       "bloqueos": 0,
-      "entradas": 0
+      "entradas": 0,
+      "dorsal": "19",
+      "balonesDeOro": [],
+      "arquetipos": ["CREADOR DE JUGADAS", "ASISTIDOR"]
     },
     {
       "id": "dexter",
@@ -48,10 +69,16 @@
       "goles": 0,
       "asistencias": 0,
       "hattricks": 0,
-      "semana": { "goles": 0, "asistencias": 0 },
+      "semana": {
+        "goles": 0,
+        "asistencias": 0
+      },
       "salvadas": 0,
       "bloqueos": 0,
-      "entradas": 0
+      "entradas": 0,
+      "dorsal": "8",
+      "balonesDeOro": [],
+      "arquetipos": ["REGATEADOR"]
     },
     {
       "id": "andres",
@@ -62,9 +89,19 @@
       "asistencias": 0,
       "hattricks": 0,
       "salvadas": 0,
-      "semana": { "goles": 0, "asistencias": 0, "hattricks": 0, "bloqueos": 0, "entradas": 0, "salvadas": 0 },
+      "semana": {
+        "goles": 0,
+        "asistencias": 0,
+        "hattricks": 0,
+        "bloqueos": 0,
+        "entradas": 0,
+        "salvadas": 0
+      },
       "bloqueos": 0,
-      "entradas": 0
+      "entradas": 0,
+      "dorsal": "1",
+      "balonesDeOro": [],
+      "arquetipos": ["MURALLA"]
     },
     {
       "id": "cupi",
@@ -76,8 +113,18 @@
       "hattricks": 0,
       "bloqueos": 0,
       "entradas": 0,
-      "semana": { "goles": 0, "asistencias": 0, "hattricks": 0, "bloqueos": 0, "entradas": 0, "salvadas": 0 },
-      "salvadas": 0
+      "semana": {
+        "goles": 0,
+        "asistencias": 0,
+        "hattricks": 0,
+        "bloqueos": 0,
+        "entradas": 0,
+        "salvadas": 0
+      },
+      "salvadas": 0,
+      "dorsal": "14",
+      "balonesDeOro": [],
+      "arquetipos": ["TODO TERRENO"]
     },
     {
       "id": "jose",
@@ -89,8 +136,18 @@
       "hattricks": 0,
       "bloqueos": 0,
       "entradas": 0,
-      "semana": { "goles": 0, "asistencias": 0, "hattricks": 0, "bloqueos": 0, "entradas": 0, "salvadas": 0 },
-      "salvadas": 0
+      "semana": {
+        "goles": 0,
+        "asistencias": 0,
+        "hattricks": 0,
+        "bloqueos": 0,
+        "entradas": 0,
+        "salvadas": 0
+      },
+      "salvadas": 0,
+      "dorsal": "7",
+      "balonesDeOro": [],
+      "arquetipos": []
     },
     {
       "id": "keiler",
@@ -102,8 +159,18 @@
       "hattricks": 0,
       "bloqueos": 0,
       "entradas": 0,
-      "semana": { "goles": 0, "asistencias": 0, "hattricks": 0, "bloqueos": 0, "entradas": 0, "salvadas": 0 },
-      "salvadas": 0
+      "semana": {
+        "goles": 0,
+        "asistencias": 0,
+        "hattricks": 0,
+        "bloqueos": 0,
+        "entradas": 0,
+        "salvadas": 0
+      },
+      "salvadas": 0,
+      "dorsal": "3",
+      "balonesDeOro": [],
+      "arquetipos": []
     },
     {
       "id": "abel",
@@ -115,8 +182,18 @@
       "hattricks": 0,
       "bloqueos": 0,
       "entradas": 0,
-      "semana": { "goles": 0, "asistencias": 0, "hattricks": 0, "bloqueos": 0, "entradas": 0, "salvadas": 0 },
-      "salvadas": 0
+      "semana": {
+        "goles": 0,
+        "asistencias": 0,
+        "hattricks": 0,
+        "bloqueos": 0,
+        "entradas": 0,
+        "salvadas": 0
+      },
+      "salvadas": 0,
+      "dorsal": "2",
+      "balonesDeOro": [],
+      "arquetipos": ["RUDO"]
     },
     {
       "id": "anthony",
@@ -128,8 +205,18 @@
       "hattricks": 0,
       "bloqueos": 0,
       "entradas": 0,
-      "semana": { "goles": 0, "asistencias": 0, "hattricks": 0, "bloqueos": 0, "entradas": 0, "salvadas": 0 },
-      "salvadas": 0
+      "semana": {
+        "goles": 0,
+        "asistencias": 0,
+        "hattricks": 0,
+        "bloqueos": 0,
+        "entradas": 0,
+        "salvadas": 0
+      },
+      "salvadas": 0,
+      "dorsal": "4",
+      "balonesDeOro": [],
+      "arquetipos": ["INTERCEPTADOR"]
     },
     {
       "id": "dylan",
@@ -139,10 +226,16 @@
       "goles": 0,
       "asistencias": 0,
       "hattricks": 0,
-      "semana": { "goles": 0, "asistencias": 0 },
+      "semana": {
+        "goles": 0,
+        "asistencias": 0
+      },
       "salvadas": 0,
       "bloqueos": 0,
-      "entradas": 0
+      "entradas": 0,
+      "dorsal": "27",
+      "balonesDeOro": [],
+      "arquetipos": ["REGATEADOR", "KILLER"]
     },
     {
       "id": "dieguito",
@@ -152,10 +245,16 @@
       "goles": 0,
       "asistencias": 0,
       "hattricks": 0,
-      "semana": { "goles": 0, "asistencias": 0 },
+      "semana": {
+        "goles": 0,
+        "asistencias": 0
+      },
       "salvadas": 0,
       "bloqueos": 0,
-      "entradas": 0
+      "entradas": 0,
+      "dorsal": "28",
+      "balonesDeOro": [],
+      "arquetipos": ["VELOCISTA", "RECUPERADOR"]
     },
     {
       "id": "samuel",
@@ -165,10 +264,16 @@
       "goles": 0,
       "asistencias": 0,
       "hattricks": 0,
-      "semana": { "goles": 0, "asistencias": 0 },
+      "semana": {
+        "goles": 0,
+        "asistencias": 0
+      },
       "salvadas": 0,
       "bloqueos": 0,
-      "entradas": 0
+      "entradas": 0,
+      "dorsal": "12",
+      "balonesDeOro": [],
+      "arquetipos": ["CAZA-GOLES", "KILLER", "HAGE"]
     },
     {
       "id": "alcantara",
@@ -178,10 +283,16 @@
       "goles": 0,
       "asistencias": 0,
       "hattricks": 0,
-      "semana": { "goles": 0, "asistencias": 0 },
+      "semana": {
+        "goles": 0,
+        "asistencias": 0
+      },
       "salvadas": 0,
       "bloqueos": 0,
-      "entradas": 0
+      "entradas": 0,
+      "dorsal": null,
+      "balonesDeOro": [],
+      "arquetipos": []
     },
     {
       "id": "pedrito",
@@ -191,10 +302,16 @@
       "goles": 0,
       "asistencias": 0,
       "hattricks": 0,
-      "semana": { "goles": 0, "asistencias": 0 },
+      "semana": {
+        "goles": 0,
+        "asistencias": 0
+      },
       "salvadas": 0,
       "bloqueos": 0,
-      "entradas": 0
+      "entradas": 0,
+      "dorsal": null,
+      "balonesDeOro": [],
+      "arquetipos": ["RECUPERADOR", "ASISTIDOR"]
     },
     {
       "id": "joniel",
@@ -206,8 +323,18 @@
       "hattricks": 0,
       "bloqueos": 0,
       "entradas": 0,
-      "semana": { "goles": 0, "asistencias": 0, "hattricks": 0, "bloqueos": 0, "entradas": 0, "salvadas": 0 },
-      "salvadas": 0
+      "semana": {
+        "goles": 0,
+        "asistencias": 0,
+        "hattricks": 0,
+        "bloqueos": 0,
+        "entradas": 0,
+        "salvadas": 0
+      },
+      "salvadas": 0,
+      "dorsal": null,
+      "balonesDeOro": [],
+      "arquetipos": []
     },
     {
       "id": "gabriel",
@@ -218,9 +345,19 @@
       "asistencias": 0,
       "hattricks": 0,
       "salvadas": 0,
-      "semana": { "goles": 0, "asistencias": 0, "hattricks": 0, "bloqueos": 0, "entradas": 0, "salvadas": 0 },
+      "semana": {
+        "goles": 0,
+        "asistencias": 0,
+        "hattricks": 0,
+        "bloqueos": 0,
+        "entradas": 0,
+        "salvadas": 0
+      },
       "bloqueos": 0,
-      "entradas": 0
+      "entradas": 0,
+      "dorsal": null,
+      "balonesDeOro": [],
+      "arquetipos": ["INTERCEPTADOR"]
     },
     {
       "id": "shanel",
@@ -231,9 +368,19 @@
       "asistencias": 0,
       "hattricks": 0,
       "salvadas": 0,
-      "semana": { "goles": 0, "asistencias": 0, "hattricks": 0, "bloqueos": 0, "entradas": 0, "salvadas": 0 },
+      "semana": {
+        "goles": 0,
+        "asistencias": 0,
+        "hattricks": 0,
+        "bloqueos": 0,
+        "entradas": 0,
+        "salvadas": 0
+      },
       "bloqueos": 0,
-      "entradas": 0
+      "entradas": 0,
+      "dorsal": null,
+      "balonesDeOro": [],
+      "arquetipos": ["INTERCEPTADOR"]
     },
     {
       "id": "josue",
@@ -245,8 +392,18 @@
       "hattricks": 0,
       "bloqueos": 0,
       "entradas": 0,
-      "semana": { "goles": 0, "asistencias": 0, "hattricks": 0, "bloqueos": 0, "entradas": 0, "salvadas": 0 },
-      "salvadas": 0
+      "semana": {
+        "goles": 0,
+        "asistencias": 0,
+        "hattricks": 0,
+        "bloqueos": 0,
+        "entradas": 0,
+        "salvadas": 0
+      },
+      "salvadas": 0,
+      "dorsal": null,
+      "balonesDeOro": [],
+      "arquetipos": ["INTERCEPTADOR"]
     }
   ]
 }
