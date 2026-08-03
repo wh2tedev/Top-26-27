@@ -100,6 +100,14 @@
   margin-bottom: 4px;
 }
 
+.player-card-dorsal{
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--muted);
+  margin: -2px 0 8px;
+}
+
 .player-card-pos{
   display: inline-block;
   font-family: var(--font-mono);
@@ -110,6 +118,48 @@
   background: var(--surface);
   border: 1px solid var(--border);
   color: var(--text-secondary);
+}
+
+/* ---------- Insignias permanentes (arquetipo + Balón de Oro) ---------- */
+.permanent-badges{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.permanent-chip{
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+
+.archetype-chip{
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--border));
+  color: var(--accent-hover);
+}
+
+.balon-oro-chip{
+  background: var(--gold-soft);
+  border: 1px solid rgba(255, 201, 64, 0.4);
+  color: var(--gold);
+}
+
+.balon-oro-chip.pending{
+  opacity: .65;
+  border-style: dashed;
+}
+.balon-oro-chip.pending em{
+  font-style: normal;
+  font-weight: 500;
+  opacity: .8;
 }
 
 .modal-stat-grid{

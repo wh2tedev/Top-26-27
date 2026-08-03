@@ -319,6 +319,34 @@
 .no-results .icon-lg{ margin: 0 auto 12px; opacity: .5; width: 40px; height: 40px; }
 .no-results p{ font-size: 14px; margin: 4px 0; }
 
+/* ================= HIGHLIGHTS (vacío por ahora) ================= */
+.highlights-empty{
+  text-align: center;
+  padding: 64px 24px;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-lg);
+  color: var(--muted);
+}
+.highlights-empty .icon-lg{
+  width: 44px; height: 44px;
+  margin: 0 auto 16px;
+  color: var(--accent);
+  opacity: .7;
+}
+.highlights-empty h3{
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.highlights-empty p{
+  font-size: 13px;
+  max-width: 280px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
 /* ================= BOTTOM NAV ================= */
 .bottom-nav{
   position: fixed;
